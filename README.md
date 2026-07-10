@@ -49,6 +49,7 @@ python -m ev_charging --max-results 300
 ├── src/ev_charging/
 │   ├── api_client.py    # Cliente OCM: retries, backoff, rate limiting
 │   ├── availability.py  # Simulador de ocupación (datos sintéticos, documentado)
+│   ├── history.py       # Series temporales desde los snapshots acumulados
 │   ├── analysis.py      # Análisis: ocupación, precios, saturación
 │   ├── dashboard.py     # Dashboard HTML con Plotly
 │   └── config.py        # Configuración central (.env)

@@ -11,6 +11,7 @@ from ev_charging.analysis import ChargingAnalyzer
 from ev_charging.api_client import OpenChargeMapClient
 from ev_charging.availability import generate_occupancy
 from ev_charging.dashboard import build_dashboard
+from ev_charging.history import load_snapshots, network_size_over_time
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger("ev_charging.pipeline")
@@ -33,8 +34,10 @@ def main() -> None:
     occupancy_df = generate_occupancy(stations_df, days=args.days)
     occupancy_df.to_parquet(config.PROCESSED_DATA_DIR / "occupancy.parquet", index=False)
 
+    history_sizes = network_size_over_time(load_snapshots())
+
     analyzer = ChargingAnalyzer(stations_df, occupancy_df)
-    path = build_dashboard(analyzer)
+    path = build_dashboard(analyzer, history_sizes=history_sizes)
     logger.info("Dashboard generado: %s", path)
     logger.info("Horas peak:\n%s", analyzer.peak_hours())
 

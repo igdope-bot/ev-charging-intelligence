@@ -1,6 +1,6 @@
 [project]
 name = "ev-charging-intelligence"
-version = "0.1.0"
+version = "0.2.0"
 description = "Análisis de infraestructura de carga EV en Chile — API integration + data analysis"
 requires-python = ">=3.10"
 readme = "README.md"
