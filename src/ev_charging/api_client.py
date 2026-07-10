@@ -117,6 +117,11 @@ class OpenChargeMapClient:
             raise OpenChargeMapError(f"Respuesta inesperada: {type(raw).__name__}")
 
         stations = [self._parse_station(s) for s in raw]
+        if len(stations) == max_results:
+            logger.warning(
+                "Se recibieron exactamente %s estaciones — posible truncamiento. "
+                "Sube max_results para asegurar el dataset completo.", max_results
+            )
         if operator_name:
             needle = operator_name.lower()
             stations = [s for s in stations if needle in (s["operator"] or "").lower()]
